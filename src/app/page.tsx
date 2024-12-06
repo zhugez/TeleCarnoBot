@@ -1,10 +1,24 @@
 "use client";
-import { CreatePasskey } from "~/app/_components/CreatePasskey";
 
-export default function WebPage() {
-  const openUrl = (url: string) => {
-    window.open(url, "_blank");
-  };
+import { useActiveAccount } from "thirdweb/react";
+import { LoginButton } from "./consts/LoginButton";
 
-  return <CreatePasskey openUrl={openUrl} comesFromBrowser />;
+export default function Home() {
+  const account = useActiveAccount();
+  return (
+    <div className="flex flex-col">
+      <div className="mx-auto">
+        <LoginButton />
+      </div>
+
+      {account && (
+        <div className="mt-12 text-center">
+          You are logged in.{" "}
+          <a href="/gated-page" className="underline">
+            Go to the gated page
+          </a>
+        </div>
+      )}
+    </div>
+  );
 }
