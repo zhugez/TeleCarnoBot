@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Hexagon - Web3 App Starter Kit
 
-## Getting Started
+# Getting Started
 
-First, run the development server:
+nodeJs：使用 .nvmrc 文件进行管理，版本为 lts/iron , 建议使用 fnm 作为版本管理
+
+依赖包管理：必须使用 pnpm，版本为 9.1.4
+
+### Use
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npx degit Pony-Unicorn/web3-framework my-project
+
+cd my-project
+
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 错误处理
 
-## Learn More
+- 推荐使用 `[err, res]` first error 形式进行错误处理，外部 throw 进行封装
 
-To learn more about Next.js, take a look at the following resources:
+```
+const [err, res] = getUserInfo()
+if(err){
+  // Left code
+}
+// Right code
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Core Dependencies
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- [Wagmi](https://wagmi.sh/) - Wagmi Reactivity for Ethereum apps
+- [viem](https://viem.sh/) - Ethereum library
+- [@reown/appkit](https://docs.reown.com/appkit/next/core/installation) - Wallet connection manager
+- [Vercel](https://vercel.com/) - App Infrastructure
+- zustand 其实也许在 nextjs 中你真的不需要状态管理
 
-## Deploy on Vercel
+### User Interface
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [TailwindCSS](https://tailwindcss.com) – Utility-first CSS framework for rapid UI development
+- [Radix](https://www.radix-ui.com/) – Primitives like modal, popover, etc. to build a stellar user experience
+- [shadcn-ui-theme-generator](https://gradient.page/tools/shadcn-ui-theme-generator) - theme generator
+- [ui.shadcn.com](https://ui.shadcn.com) components are included in the `/components/ui` folder
+- [Framer Motion](https://www.framer.com/motion/) – Motion library for React to animate components with ease
+- [React Icons](https://github.com/react-icons/react-icons) – Beautifully simple, pixel-perfect icons
+- [lucide](https://lucide.dev/) – Beautiful & consistent icons Made by the community.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Developer Experience
+
+- [TypeScript](https://www.typescriptlang.org/) – Static type checker for end-to-end typesafety
+- [Prettier](https://prettier.io/) – Opinionated code formatter for consistent code style
+- [ESLint](https://eslint.org/) – Pluggable linter for Next.js and TypeScript
+- [AssetPack](https://github.com/pixijs/assetpack/tree/main/) – AssetPack is a tool for optimising assets for the web. It can be used to transform, combine, compress assets. Any asset that you want to transform or optimise into something else can be done with AssetPack.
+
+### AI Editor cursor rules
+
+- [参考 1](https://gist.github.com/Shpigford/b3c2abe5e631f3edc4eac919ed31eaeb)
+- [参考 2](https://github.com/PatrickJS/awesome-cursorrules)
+
+### 目录结构
+
+### 命名：
+
+- 组件名字使用大驼峰，组件的文件名使用连字符
+- 基础变量使用匈牙利命名规范，变量名 = 前缀(类型) + 描述(首字母大写)。例如 const iMyAge: number = 18
+
+| 前缀 | 描述                 |
+| :--- | :------------------- |
+| a    | 数组 Array           |
+| b    | 布尔值 Boolean       |
+| cr   | 颜色参考值 Color Ref |
+| fn   | 函数 Function        |
+| h    | 句柄 Handle          |
+| i    | 整形 Int             |
+| s    | 字符串 String        |
+
+### Color
+
+- background 背景色
+- foreground 前景色
+- popover 弹出窗色
+- card 卡片色
+- border 边框色
+- input 输入框色
+- muted 柔和色
+- primary 重要色
+- secondary 次要色
+- accent 强调色
+- destructive 警告、破坏性的
+- ring
+
+### Todo
+
+- [ ] 布局组件 flex、box、grid
+- [ ] 面板弹窗管理
+- [ ] 框架优化
+  - [ ] 合约调用返回错误，框架中没有友好的提示 viem 的错误处理
+    - console.log("error message >>>", error?.message.split("\n")[2])
+
+### bug
+
+- 运行时控制台 Unable to find `next-intl` locale because the middleware didn't run on this request. See https://next-intl-docs.vercel.app/docs/routing/middleware#unable-to-find-locale. The `notFound()` function will be called as a result. 错误处理
+
+### 多语言注意事项
+
+- 配置多语言后，需要使用src/navigation 中的 Link, redirect, usePathname, useRouter
